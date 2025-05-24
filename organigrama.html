@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organigrama Gloria S.A.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #003087 0%, #c4122f 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .organigrama {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .nivel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .nivel-title {
+            background: #003087;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .box {
+            background: white;
+            border: 3px solid #003087;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            min-width: 180px;
+            max-width: 220px;
+            box-shadow: 0 8px 20px rgba(0,48,135,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,48,135,0.2);
+            border-color: #c4122f;
+        }
+        
+        .box.nivel1 {
+            background: linear-gradient(135deg, #003087 0%, #0d4ba3 100%);
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .box.nivel2 {
+            background: linear-gradient(135deg, #c4122f 0%, #d63851 100%);
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+        
+        .box.nivel3 {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-color: #c4122f;
+        }
+        
+        .box.nivel4 {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-color: #003087;
+            font-size: 0.9em;
+        }
+        
+        .box.nivel5 {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-color: #1976d2;
+            font-size: 0.85em;
+        }
+        
+        .box h3 {
+            font-size: 1em;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .box p {
+            font-size: 0.8em;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        
+        .connector {
+            width: 3px;
+            height: 25px;
+            background: linear-gradient(to bottom, #003087, #c4122f);
+            margin: 0 auto;
+        }
+        
+        .connector-horizontal {
+            height: 3px;
+            background: linear-gradient(to right, #003087, #c4122f);
+            margin: 10px 0;
+        }
+        
+        .sub-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .area-group {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #003087;
+        }
+        
+        .area-group h4 {
+            color: #003087;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 8px;
+        }
+        
+        .area-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .area-item {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #c4122f;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .area-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+        
+        .print-note {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 5px solid #4caf50;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .print-note { display: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .boxes { flex-direction: column; align-items: center; }
+            .sub-areas { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ORGANIGRAMA GLORIA S.A.</h1>
+            <p>Estructura Organizacional Corporativa</p>
+        </div>
+        
+        <div class="organigrama">
+            <!-- Nivel 1 -->
+            <div class="nivel">
+                <div class="nivel-title">NIVEL 1 - ALTA DIRECCIÓN</div>
+                <div class="boxes">
+                    <div class="box nivel1">
+                        <h3>JUNTA GENERAL DE ACCIONISTAS</h3>
+                        <p>Máximo órgano de gobierno</p>
+                    </div>
+                </div>
+                <div class="connector"></div>
+                <div class="boxes">
+                    <div class="box nivel1">
+                        <h3>DIRECTORIO</h3>
+                        <p>Presidente, Vicepresidente y Directores</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Nivel 2 -->
+            <div class="nivel">
+                <div class="nivel-title">NIVEL 2 - GERENCIA EJECUTIVA</div>
+                <div class="boxes">
+                    <div class="box nivel2">
+                        <h3>GERENCIA GENERAL</h3>
+                        <p>Gerente General Corporativo</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Nivel 3 -->
+            <div class="nivel">
+                <div class="nivel-title">NIVEL 3 - GERENCIAS CORPORATIVAS</div>
+                <div class="boxes">
+                    <div class="box nivel3">
+                        <h3>GERENCIA DE OPERACIONES</h3>
+                    </div>
+                    <div class="box nivel3">
+                        <h3>GERENCIA COMERCIAL</h3>
+                    </div>
+                    <div class="box nivel3">
+                        <h3>GERENCIA DE FINANZAS</h3>
+                    </div>
+                    <div class="box nivel3">
+                        <h3>GERENCIA DE RRHH</h3>
+                    </div>
+                    <div class="box nivel3">
+                        <h3>GERENCIA DE LOGÍSTICA</h3>
+                    </div>
+                    <div class="box nivel3">
+                        <h3>GERENCIA DE TECNOLOGÍA</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Nivel 4 -->
+            <div class="nivel">
+                <div class="nivel-title">NIVEL 4 - GERENCIAS REGIONALES Y FUNCIONALES</div>
+                
+                <div class="sub-areas">
+                    <div class="area-group">
+                        <h4>GERENCIAS REGIONALES</h4>
+                        <div class="area-list">
+                            <div class="area-item">Gerencia Regional Norte</div>
+                            <div class="area-item">Gerencia Regional Centro</div>
+                            <div class="area-item">Gerencia Regional Sur</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>ÁREA DE PRODUCCIÓN</h4>
+                        <div class="area-list">
+                            <div class="area-item">Gerencia de Plantas Lácteas</div>
+                            <div class="area-item">Gerencia de Plantas de Conservas</div>
+                            <div class="area-item">Gerencia de Control de Calidad</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>ÁREA COMERCIAL</h4>
+                        <div class="area-list">
+                            <div class="area-item">Gerencia de Marketing</div>
+                            <div class="area-item">Gerencia de Ventas Institucionales</div>
+                            <div class="area-item">Gerencia de Trade Marketing</div>
+                            <div class="area-item">Gerencia de Desarrollo de Productos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>ÁREA FINANCIERA</h4>
+                        <div class="area-list">
+                            <div class="area-item">Gerencia de Contabilidad</div>
+                            <div class="area-item">Gerencia de Tesorería</div>
+                            <div class="area-item">Gerencia de Planeamiento Financiero</div>
+                            <div class="area-item">Gerencia de Auditoría Interna</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Nivel 5 -->
+            <div class="nivel">
+                <div class="nivel-title">NIVEL 5 - JEFATURAS DEPARTAMENTALES</div>
+                
+                <div class="sub-areas">
+                    <div class="area-group">
+                        <h4>DEPARTAMENTOS DE PRODUCCIÓN</h4>
+                        <div class="area-list">
+                            <div class="area-item">Jefatura de Producción Lácteos</div>
+                            <div class="area-item">Jefatura de Producción Conservas</div>
+                            <div class="area-item">Jefatura de Mantenimiento Industrial</div>
+                            <div class="area-item">Jefatura de Seguridad Industrial</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>DEPARTAMENTOS COMERCIALES</h4>
+                        <div class="area-list">
+                            <div class="area-item">Jefatura de Ventas por Canal</div>
+                            <div class="area-item">Jefatura de Investigación de Mercados</div>
+                            <div class="area-item">Jefatura de Publicidad y Promoción</div>
+                            <div class="area-item">Jefatura de Distribución</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>DEPARTAMENTOS ADMINISTRATIVOS</h4>
+                        <div class="area-list">
+                            <div class="area-item">Jefatura de Contabilidad General</div>
+                            <div class="area-item">Jefatura de Costos</div>
+                            <div class="area-item">Jefatura de Presupuestos</div>
+                            <div class="area-item">Jefatura de Sistemas de Información</div>
+                        </div>
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>DEPARTAMENTOS DE APOYO</h4>
+                        <div class="area-list">
+                            <div class="area-item">Jefatura de Compras</div>
+                            <div class="area-item">Jefatura de Almacenes</div>
+                            <div class="area-item">Jefatura de Transporte</div>
+                            <div class="area-item">Jefatura Legal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Áreas Transversales -->
+            <div class="nivel" style="margin-top: 40px;">
+                <div class="nivel-title">ÁREAS TRANSVERSALES</div>
+                
+                <div class="sub-areas">
+                    <div class="area-group">
+                        <h4>COMITÉS CORPORATIVOS</h4>
+                        <div class="area-list">
+                            <div class="area-item">Comité de Gerencia</div>
+                            <div class="area-item">Comité de Auditoría</div>
+                            <div class="area-item">Comité de Riesgos</div>
+                            <div class="area-item">Comité de Sostenibilidad</div>
+                        </div       >
+                    </div>
+                    
+                    <div class="area-group">
+                        <h4>UNIDADES DE APOYO</h4>
+                        <div class="area-list">
+                            <div class="area-item">Asesoría Legal</div>
+                            <div class="area-item">Auditoría Interna</div>
+                            <div class="area-item">Comunicaciones Corporativas</div>
+                            <div class="area-item">Responsabilidad Social Empresarial</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="print-note">
+            <strong>💡 Tip:</strong> Este organigrama se puede imprimir o guardar como PDF. 
+            También puede copiarse y adaptarse en Word usando los colores corporativos de Gloria (Azul #003087 y Rojo #c4122f).
+        </div>
+    </div>
+</body>
+</html>
